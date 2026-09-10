@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Roadmap de Onboarding</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;background:#0d1f3c;font-family:'Sora',sans-serif}
+.root{width:100%;min-height:100vh}
+.screen{display:none}.screen.active{display:block}
+
+/* ── WELCOME ── */
+.welcome{
+  min-height:100vh;
+  background:linear-gradient(160deg,#0a1628 0%,#0d2444 60%,#102a52 100%);
+  padding:clamp(28px,6vw,56px) clamp(20px,5vw,40px);
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;gap:clamp(14px,2.5vw,20px)
+}
+.wlogo{width:clamp(56px,9vw,76px);height:clamp(56px,9vw,76px);border-radius:50%;background:#c8860a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(200,134,10,0.15);flex-shrink:0}
+.wtitle{font-size:clamp(18px,4vw,24px);font-weight:800;color:#f0f8ff}
+.wsub{font-size:clamp(12px,2.5vw,14px);color:#5a80a8;font-weight:600;max-width:300px;line-height:1.6}
+.wform{width:100%;max-width:520px;display:flex;flex-direction:column;gap:14px;text-align:left}
+.wlabel{font-size:11px;font-weight:700;color:#4a6a8a;letter-spacing:.1em;text-transform:uppercase}
+.winput{width:100%;background:#0a1e38;border:1.5px solid #1e3e6a;border-radius:12px;padding:clamp(12px,2vw,14px) 16px;font-size:clamp(13px,2.5vw,15px);font-weight:600;color:#e8f4ff;font-family:'Sora',sans-serif;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.winput:focus{border-color:#f5c842}
+.winput::placeholder{color:#3a5a7a}
+.werr{font-size:12px;color:#e05a6a;font-weight:600;min-height:16px}
+
+/* service cards */
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:520px}
+@media(max-width:400px){.svc-grid{grid-template-columns:1fr}}
+.svc-card{
+  border:1.5px solid #1e3e6a;border-radius:14px;
+  padding:14px 16px;cursor:pointer;
+  background:#0a1e38;
+  transition:border-color .2s,background .2s;
+  text-align:left;position:relative
+}
+.svc-card:hover{border-color:#4a7ab8;background:#0d2444}
+.svc-card.selected{border-color:#f5c842;background:#13243e}
+.svc-card.selected::after{content:"✓";position:absolute;top:10px;right:12px;font-size:13px;font-weight:800;color:#f5c842}
+.svc-name{font-size:clamp(11px,2vw,12px);font-weight:800;color:#e8f4ff;line-height:1.3}
+.svc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.svc-tag{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px;background:rgba(245,200,66,0.12);color:#f5c842;letter-spacing:.04em}
+.svc-steps{font-size:10px;color:#4a6a8a;font-weight:600;margin-top:6px}
+.wsvc-label{font-size:11px;font-weight:700;color:#4a6a8a;letter-spacing:.1em;text-transform:uppercase;width:100%;max-width:520px;text-align:left}
+.wsvc-err{font-size:12px;color:#e05a6a;font-weight:600;min-height:16px;width:100%;max-width:520px;text-align:left}
+#wBtn{
+  display:block;width:100%;max-width:520px;
+  padding:clamp(13px,2vw,16px);border:none;border-radius:12px;
+  font-family:'Sora',sans-serif;font-size:clamp(13px,2.5vw,15px);font-weight:800;
+  letter-spacing:.02em;
+  background:#f5c842 !important;color:#0a1628 !important;
+  cursor:not-allowed;opacity:.25;box-shadow:none;
+  transition:opacity .2s,transform .15s,box-shadow .15s;
+  -webkit-appearance:none;appearance:none
+}
+#wBtn.on{cursor:pointer;opacity:1;box-shadow:0 6px 24px rgba(245,200,66,0.45)}
+#wBtn.on:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,200,66,0.55)}
+#wBtn.on:active{transform:scale(.97)}
+
+/* ── HEADER ── */
+.hdr{display:flex;align-items:center;gap:12px;padding:clamp(12px,2vw,16px) clamp(14px,3vw,24px);background:#091629;border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:20}
+.av{width:clamp(36px,6vw,44px);height:clamp(36px,6vw,44px);border-radius:50%;background:#1a3a60;border:2px solid #c8860a;display:flex;align-items:center;justify-content:center;font-size:clamp(11px,2vw,14px);font-weight:800;color:#f5c842;flex-shrink:0}
+.ci{flex:1;min-width:0}
+.cl{font-size:clamp(9px,1.5vw,10px);font-weight:700;color:#4a6a8a;letter-spacing:.1em;text-transform:uppercase}
+.cn{font-size:clamp(14px,3vw,17px);font-weight:800;color:#e8f4ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pg{text-align:right;flex-shrink:0}
+.pgn{font-size:clamp(17px,3.5vw,21px);font-weight:800;color:#f5c842;line-height:1}
+.pgl{font-size:clamp(8px,1.5vw,9px);font-weight:700;color:#4a6a8a;text-transform:uppercase;letter-spacing:.08em}
+
+/* service badge in header */
+.svc-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.25);border-radius:99px;padding:3px 10px;font-size:clamp(9px,1.5vw,10px);font-weight:700;color:#f5c842;margin-top:3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── MAP desktop ── */
+.map{position:relative;height:clamp(260px,42vw,460px);overflow:hidden;background:radial-gradient(ellipse at 50% 0%,#162d52 0%,#0d1f3c 60%)}
+.path-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.islands-wrap{position:absolute;inset:0}
+.isl{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);user-select:none}
+.isl:hover{transform:translateY(-5px) scale(1.05)}
+.isl-lbl{margin-top:5px;font-size:clamp(7px,1.3vw,10px);font-weight:700;color:rgba(255,255,255,.85);text-align:center;width:clamp(60px,10vw,92px);line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
+/* ── mobile list ── */
+@media(max-width:540px){
+  .map{display:none}
+  .mobile-steps{display:flex;flex-direction:column;gap:0;background:#0d1f3c;padding:16px 16px 0}
+  .ms-item{display:flex;align-items:flex-start;gap:12px}
+  .ms-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+  .ms-circle{width:44px;height:44px;border-radius:50%;background:#1a2a3a;border:2.5px solid #2a4060;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;position:relative;transition:transform .2s}
+  .ms-circle:hover{transform:scale(1.08)}
+  .ms-circle.done{background:#1a4a28;border-color:#2ecc71}
+  .ms-circle.active{background:#1a1050;border-color:#f5c842;box-shadow:0 0 0 4px rgba(245,200,66,0.18)}
+  .ms-line{width:2px;flex:1;min-height:20px;background:#1e3050;margin:4px 0}
+  .ms-line.done{background:#2ecc71}
+  .ms-body{padding:0 0 20px;flex:1;min-width:0}
+  .ms-name{font-size:13px;font-weight:700;color:#e8f4ff;line-height:1.3;margin-top:10px}
+  .ms-name.active-txt{color:#f5c842}
+  .ms-name.done-txt{color:#4edd8a}
+  .ms-desc{font-size:12px;color:#5a80a8;line-height:1.5;margin-top:4px}
+  .ms-btn{margin-top:10px;background:#c8860a;color:#fff;border:none;border-radius:10px;padding:9px 20px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:inline-block}
+  .ms-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;display:inline-block;margin-top:10px}
+  .ms-badge.done{background:#fff8e0;color:#7a5000}
+  .ms-badge.lock{background:#eee;color:#888}
+}
+@media(min-width:541px){.mobile-steps{display:none}}
+
+/* ── SERVICES FOOTER ── */
+.svc-footer{background:#091629;border-top:1px solid rgba(255,255,255,0.06);padding:clamp(12px,2vw,16px) clamp(14px,3vw,24px);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.svc-footer-label{font-size:10px;font-weight:700;color:#4a6a8a;letter-spacing:.1em;text-transform:uppercase;flex-shrink:0}
+.svc-pills{display:flex;gap:6px;flex-wrap:wrap}
+.svc-pill{font-size:10px;font-weight:700;padding:4px 12px;border-radius:99px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);color:#f5c842}
+
+/* ── PANEL ── */
+.panel-wrap{background:#f8f7ff;border-top:1px solid #e2dff7}
+.panel-inner{padding:clamp(16px,3vw,22px) clamp(16px,4vw,24px) clamp(18px,4vw,24px);position:relative}
+.pcls{position:absolute;top:14px;right:14px;background:#ede9fb;border:none;border-radius:8px;width:28px;height:28px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ptop{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pmed{width:clamp(44px,8vw,54px);height:clamp(44px,8vw,54px);border-radius:50%;flex-shrink:0;overflow:visible}
+.ptitle{font-size:clamp(13px,3vw,16px);font-weight:800;color:#1e0e5e;line-height:1.2}
+.psub{font-size:clamp(10px,2vw,11px);font-weight:600;color:#8b7fb8;margin-top:2px}
+.pgbar-wrap{margin-bottom:14px}
+.pgbar-lbl{font-size:11px;font-weight:600;color:#8b7fb8;margin-bottom:5px;display:flex;justify-content:space-between}
+.pgbar-track{height:6px;background:#ede9fb;border-radius:99px;overflow:hidden}
+.pgbar-fill{height:100%;background:#c8860a;border-radius:99px;transition:width .5s ease}
+.panel-desc{font-size:clamp(12px,2.5vw,13px);color:#5a4a9a;line-height:1.6;margin-bottom:18px;padding:12px 14px;background:#f2f0fd;border-radius:10px}
+.acts{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn-adv{background:#c8860a;color:#fff;border:none;border-radius:12px;padding:clamp(9px,2vw,11px) clamp(18px,4vw,26px);font-family:'Sora',sans-serif;font-size:clamp(12px,2.5vw,13px);font-weight:700;cursor:pointer;box-shadow:0 3px 12px rgba(200,134,10,0.3);transition:opacity .15s,transform .1s;-webkit-appearance:none}
+.btn-adv:hover{opacity:.88}.btn-adv:active{transform:scale(.97)}
+.badge{font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px}
+.bd-done{background:#fff8e0;color:#7a5000}.bd-lock{background:#f0f0f0;color:#888}
+
+.confwrap{position:absolute;inset:0;pointer-events:none;z-index:99}
+.cp{position:absolute;border-radius:50%;opacity:0;animation:cfall 1.3s ease forwards}
+@keyframes cfall{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(260px) rotate(720deg)}}
+
+/* ── FIM ── */
+.fin{display:none;background:#f8f7ff;border-top:1px solid #e2dff7;padding:clamp(28px,6vw,40px) clamp(16px,4vw,24px);text-align:center;flex-direction:column;align-items:center;gap:14px}
+.fin.show{display:flex}
+.fin-icon{width:clamp(66px,12vw,82px);height:clamp(66px,12vw,82px);border-radius:50%;background:linear-gradient(135deg,#1a4010,#2a6018);border:3px solid #2ecc71;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 10px rgba(46,204,113,0.1)}
+.fin h2{font-size:clamp(16px,4vw,20px);font-weight:800;color:#1e0e5e}
+.fin p{font-size:clamp(12px,2.5vw,13px);color:#8b7fb8;max-width:300px;line-height:1.6}
+.fin-svcs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:4px}
+.fin-pill{font-size:11px;font-weight:700;padding:4px 12px;border-radius:99px;background:#edf7ff;color:#1a5a90;border:1px solid #b5d4f4}
+</style>
+</head>
+<body>
+<div class="root">
+
+<!-- TELA 1: entrada -->
+<div class="screen active" id="sWelcome">
+  <div class="welcome">
+    <div class="wlogo">
+      <svg width="36" height="36" viewBox="0 0 38 38" fill="none">
+        <path d="M19 8.5l2.3 4.7 5.2.75-3.75 3.65.88 5.15L19 20.1l-4.63 2.75.88-5.15L11.5 13.95l5.2-.75z" fill="#fff" opacity=".95"/>
+        <rect x="15.5" y="26" width="7" height="1.6" rx=".8" fill="#fff" opacity=".7"/>
+        <rect x="17" y="28" width="4" height="1.4" rx=".7" fill="#fff" opacity=".5"/>
+        <rect x="13" y="30" width="12" height="1.5" rx=".75" fill="#fff" opacity=".6"/>
+      </svg>
+    </div>
+    <div>
+      <div class="wtitle">Roadmap de Onboarding</div>
+      <div class="wsub" style="margin-top:6px">Preencha os dados do cliente para gerar o roadmap personalizado</div>
+    </div>
+
+    <div class="wform">
+      <div class="wlabel">Nome do cliente</div>
+      <input class="winput" id="wInput" placeholder="Ex: Acme Corp" maxlength="50" oninput="checkReady()" onkeydown="if(event.key==='Enter')go()"/>
+      <div class="werr" id="wErr"></div>
+    </div>
+
+    <div class="wsvc-label">Serviços contratados <span style="color:#e05a6a">*</span></div>
+    <div class="svc-grid" id="svcGrid">
+      <div class="svc-card" data-svc="ia" onclick="selectSvc(this)">
+        <div class="svc-name">Infraestrutura de IA</div>
+        <div class="svc-tags"><span class="svc-tag">IA</span></div>
+      </div>
+      <div class="svc-card" data-svc="trafego" onclick="selectSvc(this)">
+        <div class="svc-name">Gestão de Tráfego</div>
+        <div class="svc-tags"><span class="svc-tag">Tráfego</span></div>
+      </div>
+      <div class="svc-card" data-svc="redes" onclick="selectSvc(this)">
+        <div class="svc-name">Gestão de Redes Sociais</div>
+        <div class="svc-tags"><span class="svc-tag">Redes Sociais</span></div>
+      </div>
+      <div class="svc-card" data-svc="pavs" onclick="selectSvc(this)">
+        <div class="svc-name">PAVS</div>
+        <div class="svc-tags"><span class="svc-tag">PAVS</span></div>
+      </div>
+      <div class="svc-card" data-svc="marketing" onclick="selectSvc(this)" style="grid-column:1/-1">
+        <div class="svc-name">Marketing</div>
+        <div class="svc-tags"><span class="svc-tag">Marketing</span></div>
+      </div>
+    </div>
+    <div class="wsvc-err" id="svcErr"></div>
+
+    <button id="wBtn" onclick="go()" disabled>Gerar roadmap</button>
+  </div>
+</div>
+
+<!-- TELA 2: mapa -->
+<div class="screen" id="sMap">
+  <div class="hdr">
+    <div class="av" id="avEl">CL</div>
+    <div class="ci">
+      <div class="cl">onboarding do cliente</div>
+      <div class="cn" id="cnEl"></div>
+      <div class="svc-badge" id="svcBadge"></div>
+    </div>
+    <div class="pg">
+      <div class="pgn" id="pgNum">0/0</div>
+      <div class="pgl">concluídas</div>
+    </div>
+    <button onclick="openEditSvcs()" style="margin-left:8px;background:rgba(245,200,66,0.12);border:1px solid rgba(245,200,66,0.3);border-radius:10px;color:#f5c842;font-family:'Sora',sans-serif;font-size:10px;font-weight:700;padding:6px 12px;cursor:pointer;flex-shrink:0;letter-spacing:.04em;white-space:nowrap">Editar serviços</button>
+  </div>
+
+  <div class="svc-footer" id="svcFooter">
+    <div class="svc-footer-label">Serviços</div>
+    <div class="svc-pills" id="svcPills"></div>
+  </div>
+
+  <div class="map">
+    <svg class="path-svg" id="pathSvg" viewBox="0 0 700 460" preserveAspectRatio="none">
+      <path id="pathBg" stroke="rgba(200,134,10,0.13)" stroke-width="20" fill="none" stroke-linecap="round"/>
+      <path id="pathDash" stroke="rgba(245,200,66,0.28)" stroke-width="2.5" stroke-dasharray="16 13" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="islands-wrap" id="islandsEl"></div>
+    <div class="confwrap" id="confEl"></div>
+  </div>
+
+  <div class="mobile-steps" id="mobileSteps"></div>
+
+  <div id="panelWrap" style="display:none">
+    <div class="panel-wrap">
+      <div class="panel-inner">
+        <button class="pcls" onclick="closePanel()">
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1 1l9 9M10 1L1 10" stroke="#8b7fb8" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="ptop">
+          <svg class="pmed" id="pSvgEl" viewBox="0 0 54 54" width="54" height="54" overflow="visible"></svg>
+          <div>
+            <div class="ptitle" id="ptitleEl"></div>
+            <div class="psub" id="psubEl"></div>
+          </div>
+        </div>
+        <div class="pgbar-wrap">
+          <div class="pgbar-lbl"><span>Progresso geral</span><span id="pPct">0%</span></div>
+          <div class="pgbar-track"><div class="pgbar-fill" id="pFill" style="width:0%"></div></div>
+        </div>
+        <div class="panel-desc" id="pDesc"></div>
+        <div class="acts">
+          <button class="btn-adv" id="btnAdv" onclick="advance()">Avançar fase</button>
+          <span class="badge bd-done" id="bdDone" style="display:none">Concluída</span>
+          <span class="badge bd-lock" id="bdLock" style="display:none">Bloqueada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fin" id="finEl">
+    <div class="fin-icon">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <path d="M22 7l2.7 5.5 6.1.9-4.4 4.3 1.04 6.1L22 20.6l-5.44 2.8 1.04-6.1L13.2 13.4l6.1-.9z" fill="#f5c842" stroke="#e8a820" stroke-width=".8" stroke-linejoin="round"/>
+        <path d="M15 29h14v2.5a2 2 0 0 1-2 2H17a2 2 0 0 1-2-2V29z" fill="#4edd8a"/>
+        <rect x="19" y="23" width="6" height="7" rx="1" fill="#4edd8a"/>
+        <path d="M14 38h16" stroke="#4edd8a" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h2>Onboarding concluído!</h2>
+    <p id="finTxt">Parabéns! O cliente está pronto.</p>
+    <div class="fin-svcs" id="finSvcs"></div>
+  </div>
+</div>
+
+</div>
+
+<!-- MODAL EDITAR SERVIÇOS -->
+<div id="editSvcsModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(5,14,30,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center">
+  <div style="background:#0d2040;border:1.5px solid #1e3e6a;border-radius:20px;padding:28px 24px;width:min(92vw,420px);max-height:90vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:15px;font-weight:800;color:#e8f4ff">Editar serviços</div>
+      <button onclick="closeEditSvcs()" style="background:#1a3050;border:none;border-radius:8px;width:28px;height:28px;cursor:pointer;color:#8a9ab8;font-size:16px;display:flex;align-items:center;justify-content:center">×</button>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#4a6a8a;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Serviços contratados <span style="color:#e05a6a">*</span></div>
+    <div class="svc-grid" id="editSvcGrid">
+      <div class="svc-card" data-svc="ia" onclick="editSelectSvc(this)"><div class="svc-name">Infraestrutura de IA</div><div class="svc-tags"><span class="svc-tag">IA</span></div></div>
+      <div class="svc-card" data-svc="trafego" onclick="editSelectSvc(this)"><div class="svc-name">Gestão de Tráfego</div><div class="svc-tags"><span class="svc-tag">Tráfego</span></div></div>
+      <div class="svc-card" data-svc="redes" onclick="editSelectSvc(this)"><div class="svc-name">Gestão de Redes Sociais</div><div class="svc-tags"><span class="svc-tag">Redes Sociais</span></div></div>
+      <div class="svc-card" data-svc="pavs" onclick="editSelectSvc(this)"><div class="svc-name">PAVS</div><div class="svc-tags"><span class="svc-tag">PAVS</span></div></div>
+      <div class="svc-card" data-svc="marketing" onclick="editSelectSvc(this)" style="grid-column:1/-1"><div class="svc-name">Marketing</div><div class="svc-tags"><span class="svc-tag">Marketing</span></div></div>
+    </div>
+    <div id="editSvcErr" style="font-size:12px;color:#e05a6a;font-weight:600;min-height:16px;margin-top:4px"></div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button onclick="applyEditSvcs()" style="flex:1;background:#f5c842;color:#0a1628;border:none;border-radius:12px;padding:13px;font-family:'Sora',sans-serif;font-size:13px;font-weight:800;cursor:pointer">Aplicar alterações</button>
+      <button onclick="resetAll()" style="background:#1a2a40;border:1px solid #2a4060;border-radius:12px;padding:13px 16px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;color:#8a9ab8;cursor:pointer">Novo cliente</button>
+    </div>
+  </div>
+</div>
+<script>
+const PIPELINES = {
+  ia:       { label: 'Infraestrutura de IA' },
+  trafego:  { label: 'Gestão de Tráfego' },
+  redes:    { label: 'Gestão de Redes Sociais' },
+  pavs:     { label: 'PAVS' },
+  marketing:{ label: 'Marketing' },
+};
+
+const ICON_MAP = {
+  'Ficha':       `<path d="M13 4H7a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V8l-5-4z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/><path d="M13 4v4h4" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M9 12h6M9 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'WhatsApp':    `<path d="M20 4H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3l3 4 3-4h7a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/><path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'cliente IA':  `<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'Marketing':   `<path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/><path d="M13 13l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'cliente':     `<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'equipa':      `<circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7" fill="none"/><circle cx="15" cy="8" r="3" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M3 20c0-4 2.7-6 6-6h6c3.3 0 6 2 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>`,
+  'Framework':   `<rect x="3" y="3" width="18" height="18" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'criativos':   `<rect x="3" y="3" width="18" height="18" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M7 16l4-4 3 3 5-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`,
+  'cronograma':  `<rect x="3" y="3" width="18" height="18" rx="2.5" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M8 7v10M12 7v10M16 7v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'PAV':         `<path d="M15 10l-7 4 7 4V10z" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" fill="none"/>`,
+  'Formação':    `<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 8v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'Briefing':    `<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="1.7" fill="none"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M9 12h6M9 15h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+  'recorrentes': `<path d="M12 4v2M12 18v2M4 12H2M22 12h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M6.34 6.34l1.42 1.42M16.24 16.24l1.42 1.42M6.34 17.66l1.42-1.42M16.24 7.76l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>`,
+};
+
+function getIcon(name){
+  for(const [key,svg] of Object.entries(ICON_MAP)){
+    if(name.includes(key)) return svg;
+  }
+  return ICON_MAP['recorrentes'];
+}
+
+function getPath(n){
+  const paths={
+    6:'M 60 410 Q 105 320 175 280 Q 240 245 320 220 Q 395 198 465 215 Q 535 232 605 195 Q 650 172 680 135',
+    7:'M 55 400 Q 95 310 160 270 Q 220 235 290 210 Q 360 185 430 210 Q 490 232 555 215 Q 620 198 660 145',
+    9:'M 45 410 Q 85 320 145 282 Q 200 250 255 218 Q 308 185 360 182 Q 412 179 455 210 Q 494 238 542 228 Q 588 218 628 190 Q 656 168 675 130',
+    10:'M 38 415 Q 76 326 134 288 Q 190 252 242 220 Q 292 188 340 182 Q 388 176 428 206 Q 464 234 508 226 Q 550 218 590 196 Q 622 176 648 152 Q 668 132 678 105',
+    11:'M 32 418 Q 68 330 124 292 Q 178 256 228 224 Q 276 193 322 184 Q 368 175 406 202 Q 440 226 482 220 Q 522 214 560 196 Q 594 180 622 158 Q 646 138 664 114 Q 678 95 685 72'
+  };
+  return paths[n]||paths[7];
+}
+
+function getPositions(n){
+  const p={
+    6: [{l:'4%',t:'71%'},{l:'18%',t:'50%'},{l:'34%',t:'34%'},{l:'52%',t:'35%'},{l:'70%',t:'25%'},{l:'87%',t:'16%'}],
+    7: [{l:'3%',t:'69%'},{l:'16%',t:'48%'},{l:'31%',t:'32%'},{l:'47%',t:'38%'},{l:'62%',t:'28%'},{l:'77%',t:'35%'},{l:'89%',t:'18%'}],
+    9: [{l:'2%',t:'71%'},{l:'13%',t:'52%'},{l:'25%',t:'35%'},{l:'37%',t:'42%'},{l:'49%',t:'27%'},{l:'61%',t:'35%'},{l:'72%',t:'22%'},{l:'83%',t:'30%'},{l:'91%',t:'14%'}],
+    10:[{l:'2%',t:'73%'},{l:'11%',t:'55%'},{l:'22%',t:'38%'},{l:'33%',t:'46%'},{l:'44%',t:'30%'},{l:'55%',t:'38%'},{l:'65%',t:'24%'},{l:'75%',t:'32%'},{l:'84%',t:'18%'},{l:'92%',t:'8%'}],
+    11:[{l:'1%',t:'74%'},{l:'10%',t:'57%'},{l:'20%',t:'40%'},{l:'30%',t:'48%'},{l:'40%',t:'32%'},{l:'50%',t:'40%'},{l:'60%',t:'26%'},{l:'69%',t:'34%'},{l:'78%',t:'20%'},{l:'87%',t:'12%'},{l:'93%',t:'4%'}]
+  };
+  return p[n]||p[7];
+}
+
+function makeIcon(idx,state,s,stages){
+  const iconSvg=getIcon(stages[idx].name);
+  const done=state==='done',active=state==='active',locked=state==='locked';
+  const bg=done?'#1a4a28':active?'#1a1050':'#1a2a3a';
+  const ring=done?'#2ecc71':active?'#f5c842':'#2a4060';
+  const ring2=done?'#27ae60':active?'#c8860a':'#1e3050';
+  const ic=done?'#4edd8a':active?'#f5c842':'#3a6080';
+  const nb=done?'#2ecc71':active?'#c8860a':'#2a4060';
+  const cx=s/2,cy=s/2,R=s*.42,nr=s*.145,fs=s*.165;
+  const pulse=active?`<circle cx="${cx}" cy="${cy}" r="${R*1.12}" fill="none" stroke="${ring}" stroke-width="${s*.022}" opacity=".4"><animate attributeName="r" values="${R*1.05};${R*1.3};${R*1.05}" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".5;0;.5" dur="2s" repeatCount="indefinite"/></circle>`:'';
+  const check=done?`<circle cx="${cx+R*.62}" cy="${cy-R*.62}" r="${R*.27}" fill="#2ecc71" stroke="#fff" stroke-width="${s*.028}"/><path d="M${cx+R*.48} ${cy-R*.62}l${R*.11} ${R*.11}l${R*.21}-${R*.21}" stroke="#fff" stroke-width="${s*.038}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`:'';
+  const lk=locked?`<path d="M${cx-s*.06} ${cy-.02*s}v-${s*.075}a${s*.06} ${s*.06} 0 0 1 ${s*.12} 0v${s*.075}" stroke="${ic}" stroke-width="${s*.038}" stroke-linecap="round" fill="none"/><rect x="${cx-s*.09}" y="${cy-.02*s}" width="${s*.18}" height="${s*.13}" rx="${s*.028}" fill="none" stroke="${ic}" stroke-width="${s*.038}"/>`:'';
+  const ico=locked?'':`<svg x="${cx-s*.21}" y="${cy-s*.21}" width="${s*.42}" height="${s*.42}" viewBox="0 0 24 24" color="${ic}">${iconSvg}</svg>`;
+  return`<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" xmlns="http://www.w3.org/2000/svg" overflow="visible">${pulse}<circle cx="${cx}" cy="${cy}" r="${R+s*.045}" fill="${ring2}" opacity=".3"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${bg}"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${ring}" stroke-width="${s*.032}"/><circle cx="${cx-R*.22}" cy="${cy-R*.26}" r="${R*.17}" fill="rgba(255,255,255,.05)"/>${ico}${lk}<circle cx="${cx+R*.6}" cy="${cy+R*.6}" r="${nr}" fill="${nb}"/><text x="${cx+R*.6}" y="${cy+R*.6+fs*.4}" text-anchor="middle" font-family="Sora,sans-serif" font-weight="800" font-size="${fs}" fill="#fff">${idx+1}</text>${check}</svg>`;
+}
+
+let cur=0,openIdx=null,client='',selectedSvcs=[],stages=[];
+const ini=n=>n.trim().split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'CL';
+
+const ROADMAP_ID = 'roadmap-vm-real-estate';
+const SB_URL = 'https://tpknuxwmiiuerzzacrzh.supabase.co';
+const SB_KEY = 'sb_publishable_GUMajJUK-PoQj9S_GJhO2A_544z2aNE';
+
+async function saveState(){
+  const payload={client,selectedSvcs,cur};
+  try{await fetch(SB_URL+'/rest/v1/roadmap_states?on_conflict=roadmap_id',{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},body:JSON.stringify({roadmap_id:ROADMAP_ID,state:payload})});}catch(e){}
+  try{localStorage.setItem('ob_'+ROADMAP_ID,JSON.stringify(payload));}catch(e){}
+}
+
+async function loadState(){
+  try{const r=await fetch(SB_URL+'/rest/v1/roadmap_states?roadmap_id=eq.'+ROADMAP_ID+'&select=state',{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});const d=await r.json();if(d&&d.length>0&&d[0].state)return d[0].state;}catch(e){}
+  try{const r=localStorage.getItem('ob_'+ROADMAP_ID);return r?JSON.parse(r):null;}catch(e){return null;}
+}
+
+async function clearState(){
+  try{await fetch(SB_URL+'/rest/v1/roadmap_states?roadmap_id=eq.'+ROADMAP_ID,{method:'DELETE',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});}catch(e){}
+  try{localStorage.removeItem('ob_'+ROADMAP_ID);}catch(e){}
+}
+
+const SVC_ORDER=['ia','trafego','redes','pavs','marketing'];
+
+function selectSvc(el){
+  const key=el.dataset.svc;
+  if(el.classList.contains('selected')){el.classList.remove('selected');selectedSvcs=selectedSvcs.filter(s=>s!==key);}
+  else{el.classList.add('selected');selectedSvcs.push(key);}
+  document.getElementById('svcErr').textContent='';checkReady();
+}
+
+function checkReady(){
+  const v=document.getElementById('wInput').value.trim();
+  const ok=v.length>=2&&selectedSvcs.length>0;
+  const b=document.getElementById('wBtn');b.disabled=!ok;b.classList.toggle('on',ok);
+}
+
+function buildCombinedPipeline(){
+  const ordered=SVC_ORDER.filter(s=>selectedSvcs.includes(s));
+  const hasIA=ordered.includes('ia');
+  const hasMarketing=ordered.includes('trafego')||ordered.includes('redes')||ordered.includes('pavs')||ordered.includes('marketing');
+  const stageMap=new Map();
+  function add(key,stage){if(!stageMap.has(key))stageMap.set(key,stage);}
+  add('ficha',{name:'Ficha pré-onboarding',desc:'Coleta e validação de todas as informações necessárias para iniciar o projeto com o cliente.'});
+  add('whatsapp',{name:'Grupo de WhatsApp com o cliente',desc:'Criação do canal de comunicação principal com os responsáveis do cliente.'});
+  if(hasIA) add('reuniao_ia',{name:'Reunião de onboarding com o cliente IA',desc:'Apresentação da equipe de IA, alinhamento de objetivos, expectativas e próximos passos.'});
+  if(hasMarketing) add('reuniao_mkt',{name:'Reunião de onboarding com o cliente Marketing',desc:'Apresentação da equipe de marketing, alinhamento de estratégia e próximos passos.'});
+  add('reuniao_equipa',{name:'Reunião de onboarding com a equipa',desc:'Alinhamento interno da equipa sobre o projeto, distribuição de responsabilidades e cronograma.'});
+  if(hasIA) add('framework',{name:'Framework da infraestrutura',desc:'Apresentação do framework da infraestrutura: arquitetura, ferramentas e integrações do projeto.'});
+  if(ordered.includes('trafego')) add('criativos',{name:'Primeiro conjunto de criativos',desc:'Apresentação dos primeiros materiais visuais desenvolvidos para o cliente, com coleta de feedback.'});
+  if(ordered.includes('redes')) add('cronograma',{name:'1º cronograma de redes sociais',desc:'Apresentação do primeiro cronograma de conteúdo (ainda sem publicações), para alinhamento editorial.'});
+  if(ordered.includes('pavs')) add('pav',{name:'1º conjunto de scripts de PAV',desc:'Apresentação dos primeiros scripts de Produções AudioVisuais para aprovação do cliente.'});
+  if(ordered.includes('marketing')) add('briefing',{name:'Briefing inicial do projeto',desc:'Apresentação do briefing inicial do projeto contratado: objetivos, público-alvo e diretrizes criativas.'});
+  add('recorrentes',{name:'Atividades recorrentes programadas',desc:'Atividades programadas de manutenção, revisão de resultados e entregas recorrentes do projeto.'});
+  if(hasIA) add('formacao',{name:'Formação inicial sobre o sistema',desc:'Treinamento do cliente para uso autónomo da plataforma, com exercícios práticos e certificação.'});
+  const pills=ordered.map(s=>PIPELINES[s].label);
+  return{label:pills.join(' + '),pills,stages:[...stageMap.values()]};
+}
+
+function go(){
+  const v=document.getElementById('wInput').value.trim();
+  if(v.length<2){document.getElementById('wErr').textContent='Insira um nome válido.';return}
+  if(selectedSvcs.length===0){document.getElementById('svcErr').textContent='Selecione pelo menos um serviço.';return}
+  client=v;
+  const pipeline=buildCombinedPipeline();stages=pipeline.stages;
+  document.getElementById('avEl').textContent=ini(client);
+  document.getElementById('cnEl').textContent=client;
+  document.getElementById('svcBadge').textContent=pipeline.label;
+  document.getElementById('svcPills').innerHTML=pipeline.pills.map(p=>`<span class="svc-pill">${p}</span>`).join('');
+  document.getElementById('finSvcs').innerHTML=pipeline.pills.map(p=>`<span class="fin-pill">${p}</span>`).join('');
+  document.getElementById('finTxt').textContent=`Parabéns! O onboarding de ${client} foi concluído com sucesso.`;
+  const path=getPath(stages.length);
+  document.getElementById('pathBg').setAttribute('d',path);
+  document.getElementById('pathDash').setAttribute('d',path);
+  document.getElementById('sWelcome').classList.remove('active');
+  document.getElementById('sMap').classList.add('active');
+  cur=0;saveState();build();
+}
+
+function isMobile(){return window.innerWidth<=540}
+
+function build(){
+  buildDesktop();buildMobile();
+  document.getElementById('pgNum').textContent=`${cur}/${stages.length}`;
+}
+
+function buildDesktop(){
+  const c=document.getElementById('islandsEl');c.innerHTML='';
+  const pos=getPositions(stages.length);
+  const iconSize=Math.max(52,Math.min(78,window.innerWidth*0.1));
+  stages.forEach((s,i)=>{
+    const state=i<cur?'done':i===cur?'active':'locked';
+    const d=document.createElement('div');d.className='isl';
+    d.style.cssText=`left:${pos[i].l};top:${pos[i].t}`;
+    d.onclick=()=>openP(i);
+    const words=s.name.split(' ');let lines=[],line='';
+    words.forEach(w=>{if((line+' '+w).trim().length>14&&line){lines.push(line);line=w}else line=(line+' '+w).trim()});
+    if(line)lines.push(line);
+    d.innerHTML=makeIcon(i,state,iconSize,stages)+`<div class="isl-lbl">${lines.join('<br>')}</div>`;
+    c.appendChild(d);
+  });
+}
+
+function buildMobile(){
+  const c=document.getElementById('mobileSteps');c.innerHTML='';
+  stages.forEach((s,i)=>{
+    const state=i<cur?'done':i===cur?'active':'locked';
+    const isLast=i===stages.length-1;
+    const iconColor=state==='done'?'#4edd8a':state==='active'?'#f5c842':'#3a6080';
+    const iconSvg=getIcon(s.name);
+    let action='';
+    if(state==='active') action=`<button class="ms-btn" onclick="mobileAdvance(${i})">Avançar fase →</button>`;
+    else if(state==='done') action=`<span class="ms-badge done">Concluída</span>`;
+    else action=`<span class="ms-badge lock">Bloqueada</span>`;
+    const row=document.createElement('div');row.className='ms-item';
+    row.innerHTML=`<div class="ms-left"><div class="ms-circle ${state}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" color="${iconColor}">${iconSvg}</svg></div>${!isLast?`<div class="ms-line ${state==='done'?'done':''}"></div>`:''}</div><div class="ms-body"><div class="ms-name ${state==='active'?'active-txt':state==='done'?'done-txt':''}">${s.name}</div><div class="ms-desc">${s.desc}</div>${action}</div>`;
+    c.appendChild(row);
+  });
+}
+
+function mobileAdvance(idx){
+  if(idx!==cur)return;cur++;saveState();build();confetti();
+  if(cur>=stages.length){setTimeout(()=>{const f=document.getElementById('finEl');f.style.display='flex';f.classList.add('show')},500);}
+}
+
+function openP(idx){
+  if(isMobile())return;openIdx=idx;
+  const s=stages[idx],state=idx<cur?'done':idx===cur?'active':'locked';
+  const sz=Math.max(44,Math.min(54,window.innerWidth*0.07));
+  document.getElementById('pSvgEl').innerHTML=makeIcon(idx,state,sz,stages).replace(/<svg[^>]*>/,'').replace('</svg>','');
+  document.getElementById('pSvgEl').setAttribute('width',sz);document.getElementById('pSvgEl').setAttribute('height',sz);
+  document.getElementById('ptitleEl').textContent=s.name;
+  document.getElementById('psubEl').textContent=`Fase ${idx+1} de ${stages.length}`;
+  const pct=Math.round(cur/stages.length*100);
+  document.getElementById('pFill').style.width=pct+'%';document.getElementById('pPct').textContent=pct+'%';
+  document.getElementById('pDesc').textContent=s.desc;
+  document.getElementById('btnAdv').style.display=state==='active'?'inline-block':'none';
+  document.getElementById('bdDone').style.display=state==='done'?'inline-block':'none';
+  document.getElementById('bdLock').style.display=state==='locked'?'inline-block':'none';
+  document.getElementById('panelWrap').style.display='block';
+  document.getElementById('finEl').style.display='none';document.getElementById('finEl').classList.remove('show');
+}
+
+function closePanel(){document.getElementById('panelWrap').style.display='none';openIdx=null}
+
+function advance(){
+  if(openIdx===null||openIdx!==cur)return;
+  closePanel();cur++;saveState();build();confetti();
+  if(cur>=stages.length){setTimeout(()=>{const f=document.getElementById('finEl');f.style.display='flex';f.classList.add('show')},700)}
+  else setTimeout(()=>openP(cur),500);
+}
+
+function confetti(){
+  const w=document.getElementById('confEl');
+  const cols=['#f5c842','#c8860a','#2ecc71','#7b5cf0','#e05a6a'];
+  for(let i=0;i<50;i++){
+    const p=document.createElement('div');p.className='cp';
+    p.style.cssText=`left:${5+Math.random()*90}%;top:8%;width:${5+Math.random()*8}px;height:${5+Math.random()*8}px;background:${cols[~~(Math.random()*cols.length)]};animation-delay:${Math.random()*.45}s;animation-duration:${1+Math.random()*.8}s`;
+    w.appendChild(p);setTimeout(()=>p.remove(),2400);
+  }
+}
+
+(async function restoreSession(){
+  const saved=await loadState();
+  if(!saved||!saved.client||saved.client.length<2||!saved.selectedSvcs||saved.selectedSvcs.length===0)return;
+  client=saved.client;selectedSvcs=saved.selectedSvcs;cur=saved.cur||0;
+  selectedSvcs.forEach(function(key){var card=document.querySelector('.svc-card[data-svc="'+key+'"]');if(card)card.classList.add('selected');});
+  var inp=document.getElementById('wInput');if(inp)inp.value=client;checkReady();
+  var pipeline=buildCombinedPipeline();stages=pipeline.stages;
+  document.getElementById('avEl').textContent=ini(client);document.getElementById('cnEl').textContent=client;
+  document.getElementById('svcBadge').textContent=pipeline.label;
+  document.getElementById('svcPills').innerHTML=pipeline.pills.map(function(p){return'<span class="svc-pill">'+p+'</span>';}).join('');
+  document.getElementById('finSvcs').innerHTML=pipeline.pills.map(function(p){return'<span class="fin-pill">'+p+'</span>';}).join('');
+  document.getElementById('finTxt').textContent='Parabéns! O onboarding de '+client+' foi concluído com sucesso.';
+  var path=getPath(stages.length);document.getElementById('pathBg').setAttribute('d',path);document.getElementById('pathDash').setAttribute('d',path);
+  document.getElementById('sWelcome').classList.remove('active');document.getElementById('sMap').classList.add('active');
+  build();
+  if(cur>=stages.length&&stages.length>0){setTimeout(function(){var f=document.getElementById('finEl');f.style.display='flex';f.classList.add('show');},300);}
+})();
+
+let editSelectedSvcs=[];
+function openEditSvcs(){
+  editSelectedSvcs=[...selectedSvcs];
+  document.querySelectorAll('#editSvcGrid .svc-card').forEach(function(card){card.classList.toggle('selected',editSelectedSvcs.includes(card.dataset.svc));});
+  document.getElementById('editSvcErr').textContent='';document.getElementById('editSvcsModal').style.display='flex';
+}
+function closeEditSvcs(){document.getElementById('editSvcsModal').style.display='none';}
+function editSelectSvc(el){
+  var key=el.dataset.svc;
+  if(el.classList.contains('selected')){el.classList.remove('selected');editSelectedSvcs=editSelectedSvcs.filter(function(s){return s!==key;});}
+  else{el.classList.add('selected');editSelectedSvcs.push(key);}
+  document.getElementById('editSvcErr').textContent='';
+}
+function applyEditSvcs(){
+  if(editSelectedSvcs.length===0){document.getElementById('editSvcErr').textContent='Selecione pelo menos um serviço.';return;}
+  selectedSvcs=editSelectedSvcs;
+  document.querySelectorAll('#svcGrid .svc-card').forEach(function(card){card.classList.toggle('selected',selectedSvcs.includes(card.dataset.svc));});
+  cur=0;var pipeline=buildCombinedPipeline();stages=pipeline.stages;
+  document.getElementById('svcBadge').textContent=pipeline.label;
+  document.getElementById('svcPills').innerHTML=pipeline.pills.map(function(p){return'<span class="svc-pill">'+p+'</span>';}).join('');
+  document.getElementById('finSvcs').innerHTML=pipeline.pills.map(function(p){return'<span class="fin-pill">'+p+'</span>';}).join('');
+  document.getElementById('finTxt').textContent='Parabéns! O onboarding de '+client+' foi concluído com sucesso.';
+  var path=getPath(stages.length);document.getElementById('pathBg').setAttribute('d',path);document.getElementById('pathDash').setAttribute('d',path);
+  document.getElementById('finEl').style.display='none';document.getElementById('finEl').classList.remove('show');
+  document.getElementById('panelWrap').style.display='none';
+  saveState();build();closeEditSvcs();
+}
+async function resetAll(){await clearState();location.reload();}
+window.addEventListener('resize',()=>{if(document.getElementById('sMap').classList.contains('active'))build()});
+</script>
+</body>
+</html>
